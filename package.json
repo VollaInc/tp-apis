@@ -1,0 +1,49 @@
+{
+  "name": "tp-apis",
+  "version": "0.7.0",
+  "description": "toss web api wrapper",
+  "main": "dist/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test-clean": "rm -rf ./.cache"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/level": "^6.0.0",
+    "@types/node": "^16.11.11",
+    "dotenv": "^10.0.0",
+    "jest": "^27.4.3",
+    "level": "^7.0.1",
+    "ts-jest": "^27.0.7"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": true
+      }
+    }
+  }
+}
