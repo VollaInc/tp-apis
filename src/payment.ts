@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 
 const V1_PAYMENT_URL = '/v1/payments';
 
@@ -249,14 +249,14 @@ export type PaymentCancelRequestType = {
 };
 
 export const getPaymentByPaymentId = (paymentId: string, options: { secretkey: string }) =>
-  TPCommonRequest<PaymentType>({
+  TPApiRequest<PaymentType>({
     method: 'GET',
     url: `/${V1_PAYMENT_URL}/${paymentId}`,
     secretkey: options.secretkey,
   });
 
 export const getPaymentByOrderId = (orderId: string, options: { secretkey: string }) =>
-  TPCommonRequest<PaymentType>({
+  TPApiRequest<PaymentType>({
     method: 'GET',
     url: `/${V1_PAYMENT_URL}/orders/${orderId}`,
     secretkey: options.secretkey,
@@ -267,7 +267,7 @@ export const postCancelPayment = (
   data: PaymentCancelRequestType,
   options: { secretkey: string },
 ) =>
-  TPCommonRequest<PaymentType>({
+  TPApiRequest<PaymentType>({
     method: 'POST',
     url: `/${V1_PAYMENT_URL}/${paymentId}/cancel`,
     data,

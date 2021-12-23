@@ -17,7 +17,7 @@ type OptionsType = {
   data?: { [key: string]: any };
 };
 
-const TPCommonRequest = <T>({
+export const TPApiRequest = <T>({
   url,
   params,
   data,
@@ -44,4 +44,4 @@ const TPCommonRequest = <T>({
     },
   });
 
-export default TPCommonRequest;
+export default TPApiRequest;

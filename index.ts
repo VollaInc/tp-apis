@@ -7,3 +7,4 @@ export * as SubMall from './src/subMall';
 export * as CardPromotion from './src/cardPromotion';
 
 export * as Constants from './src/common';
+export * from './utils/TPApiRequest';

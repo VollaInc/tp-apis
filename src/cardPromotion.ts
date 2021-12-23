@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 
 /**
  * 즉시 할인 이벤트 정보
@@ -32,7 +32,7 @@ export const getCardPromotions = ({
   secretkey: string;
   payType?: 'NORMAL' | 'CONNECTPAY';
 }) =>
-  TPCommonRequest<{
+  TPApiRequest<{
     discountCards: DiscountCardEventsType[];
     interestFreeCards: InterestFreeCardEventsType[];
   }>({

@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 import { TPCommonPaginationType } from './common';
 
 /**
@@ -64,7 +64,7 @@ export const getSettlements = (
   },
   options: { secretkey: string },
 ) =>
-  TPCommonRequest<SettlementType[]>({
+  TPApiRequest<SettlementType[]>({
     method: 'GET',
     url: V1_SETTLEMENT_URL,
     params,
@@ -83,7 +83,7 @@ export const postSettlements = (
   },
   options: { secretkey: string },
 ) =>
-  TPCommonRequest({
+  TPApiRequest({
     method: 'POST',
     url: V1_SETTLEMENT_URL,
     data,

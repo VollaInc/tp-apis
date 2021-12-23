@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 import { TPCommonPaginationType } from './common';
 import { PaymentStatus } from './payment';
 
@@ -54,7 +54,7 @@ export const getTransactions = (
   },
   options: { secretkey: string },
 ) =>
-  TPCommonRequest({
+  TPApiRequest({
     method: 'POST',
     url: V1_TRANSACTION_URL,
     params,

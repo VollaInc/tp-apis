@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 
 const V1_SUBMALL_URL = '/v1/payouts/sub-malls';
 
@@ -30,14 +30,14 @@ export type SubMallType = {
 };
 
 export const getSubMalls = async (options: { secretkey: string }) =>
-  TPCommonRequest<SubMallType>({
+  TPApiRequest<SubMallType>({
     method: 'GET',
     url: V1_SUBMALL_URL,
     secretkey: options.secretkey,
   });
 
 export const createSubMall = async (data: SubMallType, options: { secretkey: string }) =>
-  TPCommonRequest<SubMallType>({
+  TPApiRequest<SubMallType>({
     method: 'POST',
     url: V1_SUBMALL_URL,
     data,
@@ -45,7 +45,7 @@ export const createSubMall = async (data: SubMallType, options: { secretkey: str
   });
 
 export const updateSubMall = async (data: SubMallType, options: { secretkey: string }) =>
-  TPCommonRequest<SubMallType>({
+  TPApiRequest<SubMallType>({
     method: 'POST',
     url: `${V1_SUBMALL_URL}/${data.subMallId}`,
     data: { ...data, subMallId: undefined },
@@ -53,14 +53,14 @@ export const updateSubMall = async (data: SubMallType, options: { secretkey: str
   });
 
 export const deleteSubMall = async (subMallId: string, options: { secretkey: string }) =>
-  TPCommonRequest<string>({
+  TPApiRequest<string>({
     method: 'POST',
     url: `${V1_SUBMALL_URL}/${subMallId}/delete`,
     secretkey: options.secretkey,
   });
 
 export const getSubMallSettlementBalance = async (options: { secretkey: string }) =>
-  TPCommonRequest<{ balance: number }>({
+  TPApiRequest<{ balance: number }>({
     method: 'GET',
     url: V1_SUBMALL_URL,
     secretkey: options.secretkey,
@@ -80,7 +80,7 @@ export const payoutSubMallSettlements = async (
   }[],
   options: { secretkey: string },
 ) =>
-  TPCommonRequest<{ balance: number }>({
+  TPApiRequest<{ balance: number }>({
     method: 'POST',
     url: V1_SUBMALL_URL + '/settlements',
     data,

@@ -1,16 +1,17 @@
 {
   "name": "tp-apis",
-  "version": "0.7.0",
-  "description": "toss web api wrapper",
+  "version": "0.7.6",
+  "description": "toss web api wrapper (unofficial)",
   "main": "dist/index",
+  "types": "dist/index.d.ts",
   "source": "src/index",
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
     "test": "jest",
-    "test-clean": "rm -rf ./.cache"
+    "test-clean": "rm -rf ./.cache",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

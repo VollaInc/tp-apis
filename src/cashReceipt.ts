@@ -1,4 +1,4 @@
-import TPCommonRequest from './TPCommonRequest';
+import TPApiRequest from '../utils/TPApiRequest';
 
 const V1_CASH_RECEIPT_URL = '/v1/cash-receipts';
 
@@ -62,7 +62,7 @@ export const requestCashReceipt = async (
   data: CashReceiptRequestType,
   options: { secretkey: string },
 ) =>
-  TPCommonRequest<CashReceiptType>({
+  TPApiRequest<CashReceiptType>({
     method: 'POST',
     url: V1_CASH_RECEIPT_URL,
     data,
@@ -73,7 +73,7 @@ export const cancelCashReceipt = async (
   data: { receiptKey: string; amount: number },
   options: { secretkey: string },
 ) =>
-  TPCommonRequest<CashReceiptType>({
+  TPApiRequest<CashReceiptType>({
     method: 'POST',
     data: data.amount ? { amount: data.amount } : undefined,
     url: `${V1_CASH_RECEIPT_URL}/${data.receiptKey}/cancel`,
