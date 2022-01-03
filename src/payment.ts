@@ -47,7 +47,7 @@ export enum VirtualAccountRefundStatus {
   'COMPLETED' = 'COMPLETED',
 }
 
-type CancelType = {
+export type CancelType = {
   /** 결제를 취소한 금액입니다. */
   cancelAmount: number;
   /** 결제를 취소한 이유입니다.
@@ -63,7 +63,7 @@ type CancelType = {
   canceledAt: string;
 };
 
-type PaymentCardType = {
+export type PaymentCardType = {
   /**
   카드사 코드입니다. 
   */
@@ -88,7 +88,7 @@ type PaymentCardType = {
   isInterestFree: boolean;
 };
 
-type PaymentVirtualAccountType = {
+export type PaymentVirtualAccountType = {
   /**가상계좌 타입을 나타냅니다. 일반 , 고정 중 하나입니다. */
   accountType: '일반' | '고정';
   /** 발급된 계좌번호입니다. */
@@ -117,14 +117,14 @@ type PaymentMobilePhoneType = {
   settlementStatus: 'INCOMPLETE' | 'COMPLETE';
 };
 
-type PaymentGiftCertificateType = {
+export type PaymentGiftCertificateType = {
   /**결제 승인번호입니다. */
   approveNo: string;
 
   /** 정산 상태입니다. 정산이 아직 되지 않았다면 `INCOMPLETE`, 정산이 완료됐다면 `COMPLETE` 값이 들어옵니다. */
   settlementStatus: 'INCOMPLETE' | 'COMPLETE';
 };
-type PaymentTransferType = {
+export type PaymentTransferType = {
   /** 이체할 은행입니다. 은행 코드를 참고하세요. */
   bank: string;
 
@@ -132,7 +132,7 @@ type PaymentTransferType = {
   settlementStatus: 'INCOMPLETE' | 'COMPLETE';
 };
 
-type CashReceiptType = {
+export type CashReceiptType = {
   /** 현금영수증의 종류입니다. 소득공제, 지출증빙 중 하나의 값입니다. */
   type: '소득공제' | '지출증빙';
   /** 현금영수증 처리된 금액입니다. */
