@@ -39,9 +39,7 @@ export const TPApiRequest = <T>({
   data,
   method,
   ...rest
-}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<
-  T | { message?: string; code?: string }
-> =>
+}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<T> =>
   axios({
     method,
     baseURL: TOSS_PAYMENT_HOST,
