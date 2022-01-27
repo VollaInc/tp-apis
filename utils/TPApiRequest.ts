@@ -17,13 +17,31 @@ type OptionsType = {
   data?: { [key: string]: any };
 };
 
+axios.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+
+    console.error('TPApiRequest Response ERROR:', error);
+
+    return Promise.reject(error);
+  },
+);
+
 export const TPApiRequest = <T>({
   url,
   params,
   data,
   method,
   ...rest
-}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<T> =>
+}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<
+  T | { message?: string; code?: string }
+> =>
   axios({
     method,
     baseURL: TOSS_PAYMENT_HOST,
