@@ -1,6 +1,6 @@
 {
   "name": "tp-apis",
-  "version": "0.7.9",
+  "version": "0.7.11",
   "description": "toss web api wrapper (unofficial)",
   "main": "dist/index",
   "types": "dist/index.d.ts",
@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.26.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",

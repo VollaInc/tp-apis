@@ -251,14 +251,14 @@ export type PaymentCancelRequestType = {
 export const getPaymentByPaymentId = (paymentId: string, options: { secretkey: string }) =>
   TPApiRequest<PaymentType>({
     method: 'GET',
-    url: `/${V1_PAYMENT_URL}/${paymentId}`,
+    url: V1_PAYMENT_URL + `/${paymentId}`,
     secretkey: options.secretkey,
   });
 
 export const getPaymentByOrderId = (orderId: string, options: { secretkey: string }) =>
   TPApiRequest<PaymentType>({
     method: 'GET',
-    url: `/${V1_PAYMENT_URL}/orders/${orderId}`,
+    url: V1_PAYMENT_URL + `/orders/${orderId}`,
     secretkey: options.secretkey,
   });
 
@@ -269,7 +269,7 @@ export const postCancelPayment = (
 ) =>
   TPApiRequest<PaymentType>({
     method: 'POST',
-    url: `/${V1_PAYMENT_URL}/${paymentId}/cancel`,
+    url: V1_PAYMENT_URL + `/${paymentId}/cancel`,
     data,
     secretkey: options.secretkey,
   });
