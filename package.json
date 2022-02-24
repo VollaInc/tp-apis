@@ -1,6 +1,6 @@
 {
   "name": "tp-apis",
-  "version": "0.7.11",
+  "version": "0.7.12",
   "description": "toss web api wrapper (unofficial)",
   "main": "dist/index",
   "types": "dist/index.d.ts",

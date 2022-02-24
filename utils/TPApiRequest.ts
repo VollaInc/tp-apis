@@ -17,12 +17,17 @@ type OptionsType = {
   data?: { [key: string]: any };
 };
 
+type TPErrorType = {
+  message: string;
+  code: string;
+};
+
 axios.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
 
-    if (process.env.NODE_ENV === 'development') console.log(response);
+    if (process.env.NODE_ENV === 'development') console.log('TPApiRequest Response', response);
 
     return response;
   },
@@ -30,7 +35,11 @@ axios.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
 
-    console.error('TPApiRequest Response ERROR:', error);
+    console.error('TPApiRequest ERROR:', error);
+
+    if (error.response) {
+      console.error('TPApiRequest ERROR Response:', error.response);
+    }
 
     return Promise.reject(error);
   },
@@ -42,7 +51,7 @@ export const TPApiRequest = <T>({
   data,
   method,
   ...rest
-}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<T> =>
+}: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<T | TPErrorType> =>
   axios({
     method,
     baseURL: TOSS_PAYMENT_HOST,
