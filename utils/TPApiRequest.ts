@@ -15,6 +15,8 @@ type OptionsType = {
   url: string;
   params?: { [key: string]: any };
   data?: { [key: string]: any };
+
+  checkStatusValidation?: boolean;
 };
 
 type TPErrorType = {
@@ -50,6 +52,7 @@ export const TPApiRequest = <T>({
   params,
   data,
   method,
+  checkStatusValidation = true,
   ...rest
 }: OptionsType & (BearerAuthType | BasicAuthType)): AxiosPromise<T | TPErrorType> =>
   axios({
@@ -68,7 +71,7 @@ export const TPApiRequest = <T>({
       ? { Authorization: `Bearer ${(rest as BearerAuthType).accessToken}` }
       : undefined,
     validateStatus: function (status) {
-      return status >= 200 && status < 500;
+      return checkStatusValidation || (status >= 200 && status < 500);
     },
   });
 
