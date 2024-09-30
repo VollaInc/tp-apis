@@ -63,8 +63,8 @@ export type SubMallType = {
   phoneNumber?: string;
 
   /**
-   * 서브몰과 관련된 추가 정보를 key-value 쌍으로 담고 있는 객체입니다.
-   * 최대 50개의 key-value 쌍을 포함할 수 있으며 전체 크기는 4kB 이하입니다.
+   * 셀러와 관련된 추가 정보를 key-value 쌍으로 담고 있는 JSON 객체입니다. 
+   * 최대 5개의 키-값(key-value) 쌍입니다. 키는 [ , ] 를 사용하지 않는 최대 40자의 문자열, 값은 최대 500자의 문자열입니다.
    */
   metadata?: Record<string, string>;
 };
