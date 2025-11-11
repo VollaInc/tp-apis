@@ -1,3 +1,17 @@
+/**
+ * 토스페이먼츠 결제 API (v1)
+ *
+ * 결제 승인, 조회, 취소 등의 기능을 제공합니다.
+ *
+ * ## API 엔드포인트
+ * - `GET /v1/payments/{paymentKey}` - paymentKey로 결제 조회
+ * - `GET /v1/payments/orders/{orderId}` - orderId로 결제 조회
+ * - `POST /v1/payments/{paymentKey}/cancel` - 결제 취소
+ *
+ * @see https://docs.tosspayments.com/reference#결제
+ * @module Payment
+ */
+
 import TPApiRequest from '../utils/TPApiRequest';
 
 const V1_PAYMENT_URL = '/v1/payments';
@@ -248,6 +262,25 @@ export type PaymentCancelRequestType = {
   taxFreeAmount?: number;
 };
 
+/**
+ * paymentKey로 결제 조회
+ *
+ * 결제 건에 대한 고유한 키 값인 `paymentKey`로 결제 정보를 조회합니다.
+ *
+ * @param paymentId - 결제 건에 대한 고유한 키 값 (paymentKey)
+ * @param options - secretkey를 포함한 옵션 객체
+ * @returns Payment 객체를 반환합니다.
+ *
+ * @see https://docs.tosspayments.com/reference#paymentkey%EB%A1%9C-%EA%B2%B0%EC%A0%9C-%EC%A1%B0%ED%9A%8C
+ *
+ * @example
+ * ```typescript
+ * const payment = await getPaymentByPaymentId('payment-key-example', {
+ *   secretkey: 'test_sk_...'
+ * });
+ * console.log(payment.status); // 'DONE'
+ * ```
+ */
 export const getPaymentByPaymentId = (paymentId: string, options: { secretkey: string }) =>
   TPApiRequest<PaymentType>({
     method: 'GET',
@@ -255,6 +288,25 @@ export const getPaymentByPaymentId = (paymentId: string, options: { secretkey: s
     secretkey: options.secretkey,
   });
 
+/**
+ * orderId로 결제 조회
+ *
+ * 가맹점에서 주문건에 대해 발급한 고유 ID인 `orderId`로 결제 정보를 조회합니다.
+ *
+ * @param orderId - 가맹점에서 주문건에 대해 발급한 고유 ID
+ * @param options - secretkey를 포함한 옵션 객체
+ * @returns Payment 객체를 반환합니다.
+ *
+ * @see https://docs.tosspayments.com/reference#orderid%EB%A1%9C-%EA%B2%B0%EC%A0%9C-%EC%A1%B0%ED%9A%8C
+ *
+ * @example
+ * ```typescript
+ * const payment = await getPaymentByOrderId('order-12345', {
+ *   secretkey: 'test_sk_...'
+ * });
+ * console.log(payment.orderName); // '생수 외 1건'
+ * ```
+ */
 export const getPaymentByOrderId = (orderId: string, options: { secretkey: string }) =>
   TPApiRequest<PaymentType>({
     method: 'GET',
@@ -262,6 +314,44 @@ export const getPaymentByOrderId = (orderId: string, options: { secretkey: strin
     secretkey: options.secretkey,
   });
 
+/**
+ * 결제 취소
+ *
+ * 승인된 결제를 취소합니다. `paymentKey`로 결제 건을 특정하고, 취소 금액과 이유를 함께 전달합니다.
+ * 부분 취소 또는 전액 취소가 가능하며, 가상계좌의 경우 환불 계좌 정보가 필수입니다.
+ *
+ * @param paymentId - 결제 건에 대한 고유한 키 값 (paymentKey)
+ * @param data - 결제 취소 요청 데이터 (취소 사유, 취소 금액, 환불 계좌 등)
+ * @param options - secretkey를 포함한 옵션 객체
+ * @returns 취소된 Payment 객체를 반환합니다.
+ *
+ * @see https://docs.tosspayments.com/reference#%EA%B2%B0%EC%A0%9C-%EC%B7%A8%EC%86%8C
+ *
+ * @example
+ * ```typescript
+ * // 전액 취소
+ * const canceledPayment = await postCancelPayment('payment-key-example', {
+ *   cancelReason: '고객 변심'
+ * }, { secretkey: 'test_sk_...' });
+ *
+ * // 부분 취소
+ * const partialCanceled = await postCancelPayment('payment-key-example', {
+ *   cancelReason: '부분 환불',
+ *   cancelAmount: 5000,
+ *   refundableAmount: 10000
+ * }, { secretkey: 'test_sk_...' });
+ *
+ * // 가상계좌 취소 (환불 계좌 필수)
+ * const virtualAccountCanceled = await postCancelPayment('payment-key-example', {
+ *   cancelReason: '주문 취소',
+ *   refundReceiveAccount: {
+ *     bank: '20',
+ *     accountNumber: '12345678901234',
+ *     holderName: '홍길동'
+ *   }
+ * }, { secretkey: 'test_sk_...' });
+ * ```
+ */
 export const postCancelPayment = (
   paymentId: string,
   data: PaymentCancelRequestType,

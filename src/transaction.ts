@@ -36,9 +36,51 @@ export type TransactionType = {
 const V1_TRANSACTION_URL = '/v1/transactions';
 
 /**
- * 카드 결제 승인정보를 수동으로 카드사에 전송하는 방식으로 정산합니다.
- * 요청에 성공하면 `HTTP 200 OK` 응답과 함께 빈 본문이 돌아옵니다.
+ * 거래 조회
  *
+ * 특정 기간 동안 발생한 모든 거래 내역을 조회합니다.
+ * 날짜 범위를 지정하여 조회할 수 있으며, 페이지네이션을 지원합니다.
+ * 거래 내역에는 결제 승인, 취소, 환불 등 모든 거래 정보가 포함됩니다.
+ *
+ * @param params - 거래 조회 파라미터 (날짜 범위, 페이지네이션 등)
+ * @param params.startDate - 조회 시작 날짜 (YYYY-MM-DD 형식)
+ * @param params.endDate - 조회 종료 날짜 (YYYY-MM-DD 형식)
+ * @param params.startingAfter - 특정 거래 이후의 기록을 조회할 때 사용하는 transactionKey (선택사항)
+ * @param params.limit - 한 번에 응답받을 기록의 개수 (기본값: 100, 최대값: 10000)
+ * @param options - secretkey를 포함한 옵션 객체
+ * @returns Transaction 객체 배열을 반환합니다.
+ *
+ * @see https://docs.tosspayments.com/reference#%EA%B1%B0%EB%9E%98-%EC%A1%B0%ED%9A%8C
+ *
+ * @example
+ * ```typescript
+ * // 특정 기간의 거래 조회
+ * const transactions = await getTransactions({
+ *   startDate: '2024-01-01',
+ *   endDate: '2024-01-31',
+ *   limit: 100
+ * }, { secretkey: 'test_sk_...' });
+ *
+ * // 거래 내역 출력
+ * transactions.forEach(tx => {
+ *   console.log(`${tx.orderId}: ${tx.amount}원 (${tx.status})`);
+ * });
+ *
+ * // 페이지네이션을 사용한 거래 조회
+ * const firstPage = await getTransactions({
+ *   startDate: '2024-01-01',
+ *   endDate: '2024-01-31',
+ *   limit: 50
+ * }, { secretkey: 'test_sk_...' });
+ *
+ * const lastTransaction = firstPage[firstPage.length - 1];
+ * const nextPage = await getTransactions({
+ *   startDate: '2024-01-01',
+ *   endDate: '2024-01-31',
+ *   startingAfter: lastTransaction.transactionKey,
+ *   limit: 50
+ * }, { secretkey: 'test_sk_...' });
+ * ```
  */
 export const getTransactions = (
   params: TPCommonPaginationType & {
